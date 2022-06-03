@@ -1,10 +1,7 @@
 package com.celiluysal.itunesexplorer
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+@HiltAndroidApp
+class App : Application()
