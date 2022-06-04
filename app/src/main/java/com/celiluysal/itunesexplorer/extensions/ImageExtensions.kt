@@ -1,6 +1,5 @@
 package com.celiluysal.itunesexplorer.extensions
 
-import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 
