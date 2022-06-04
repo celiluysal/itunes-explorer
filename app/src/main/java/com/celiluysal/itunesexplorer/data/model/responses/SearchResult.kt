@@ -1,11 +1,15 @@
 package com.celiluysal.itunesexplorer.data.model.responses
 
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
-import com.google.gson.annotations.SerializedName
-
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class SearchResult(
-    @SerializedName("resultCount")
+    @Json(name = "resultCount")
     val resultCount: Int? = null,
-    @SerializedName("results")
+    @Json(name = "results")
     val results: List<MediaItem>? = null
-)
+): Parcelable

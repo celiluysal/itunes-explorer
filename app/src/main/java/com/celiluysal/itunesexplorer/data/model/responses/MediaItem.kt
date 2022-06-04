@@ -1,84 +1,85 @@
 package com.celiluysal.itunesexplorer.data.model.responses
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
+@JsonClass(generateAdapter = true)
+@Parcelize
 data class MediaItem(
-    @SerializedName("wrapperType")
+    @Json(name = "wrapperType")
     val wrapperType: String? = null,
-    @SerializedName("kind")
+    @Json(name = "kind")
     val kind: String? = null,
-    @SerializedName("artistId")
+    @Json(name = "artistId")
     val artistId: Int? = null,
-    @SerializedName("collectionId")
+    @Json(name = "collectionId")
     val collectionId: Int? = null,
-    @SerializedName("trackId")
+    @Json(name = "trackId")
     val trackId: Int? = null,
-    @SerializedName("artistName")
+    @Json(name = "artistName")
     val artistName: String? = null,
-    @SerializedName("collectionName")
+    @Json(name = "collectionName")
     val collectionName: String? = null,
-    @SerializedName("trackName")
+    @Json(name = "trackName")
     val trackName: String? = null,
-    @SerializedName("collectionCensoredName")
+    @Json(name = "collectionCensoredName")
     val collectionCensoredName: String? = null,
-    @SerializedName("trackCensoredName")
+    @Json(name = "trackCensoredName")
     val trackCensoredName: String? = null,
-    @SerializedName("artistViewUrl")
+    @Json(name = "artistViewUrl")
     val artistViewUrl: String? = null,
-    @SerializedName("collectionViewUrl")
+    @Json(name = "collectionViewUrl")
     val collectionViewUrl: String? = null,
-    @SerializedName("trackViewUrl")
+    @Json(name = "trackViewUrl")
     val trackViewUrl: String? = null,
-    @SerializedName("previewUrl")
+    @Json(name = "previewUrl")
     val previewUrl: String? = null,
-    @SerializedName("artworkUrl30")
+    @Json(name = "artworkUrl30")
     val artworkUrl30: String? = null,
-    @SerializedName("artworkUrl60")
+    @Json(name = "artworkUrl60")
     val artworkUrl60: String? = null,
-    @SerializedName("artworkUrl100")
+    @Json(name = "artworkUrl100")
     val artworkUrl100: String? = null,
-    @SerializedName("collectionPrice")
+    @Json(name = "collectionPrice")
     val collectionPrice: Double? = null,
-    @SerializedName("trackPrice")
+    @Json(name = "trackPrice")
     val trackPrice: Double? = null,
-    @SerializedName("releaseDate")
+    @Json(name = "releaseDate")
     val releaseDate: String? = null,
-    @SerializedName("collectionExplicitness")
+    @Json(name = "collectionExplicitness")
     val collectionExplicitness: String? = null,
-    @SerializedName("trackExplicitness")
+    @Json(name = "trackExplicitness")
     val trackExplicitness: String? = null,
-    @SerializedName("discCount")
+    @Json(name = "discCount")
     val discCount: Int? = null,
-    @SerializedName("discNumber")
+    @Json(name = "discNumber")
     val discNumber: Int? = null,
-    @SerializedName("trackCount")
+    @Json(name = "trackCount")
     val trackCount: Int? = null,
-    @SerializedName("trackNumber")
+    @Json(name = "trackNumber")
     val trackNumber: Int? = null,
-    @SerializedName("trackTimeMillis")
+    @Json(name = "trackTimeMillis")
     val trackTimeMillis: Int? = null,
-    @SerializedName("country")
+    @Json(name = "country")
     val country: String? = null,
-    @SerializedName("currency")
+    @Json(name = "currency")
     val currency: String? = null,
-    @SerializedName("primaryGenreName")
+    @Json(name = "primaryGenreName")
     val primaryGenreName: String? = null,
-    @SerializedName("isStreamable")
+    @Json(name = "isStreamable")
     val isStreamable: Boolean? = null,
-    @SerializedName("contentAdvisoryRating")
+    @Json(name = "contentAdvisoryRating")
     val contentAdvisoryRating: String? = null,
-    @SerializedName("collectionArtistName")
+    @Json(name = "collectionArtistName")
     val collectionArtistName: String? = null,
-    @SerializedName("collectionArtistId")
+    @Json(name = "collectionArtistId")
     val collectionArtistId: Int? = null,
-    @SerializedName("collectionArtistViewUrl")
+    @Json(name = "collectionArtistViewUrl")
     val collectionArtistViewUrl: String? = null,
-    @SerializedName("shortDescription")
+    @Json(name = "shortDescription")
     val shortDescription: String? = null,
-    @SerializedName("longDescription")
+    @Json(name = "longDescription")
     val longDescription: String? = null,
-) {
-    companion object {
-        const val TABLE_NAME = "media_items"
-    }
-}
+): Parcelable
