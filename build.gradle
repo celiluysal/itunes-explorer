@@ -5,6 +5,7 @@ buildscript {
     ext.retrofitVersion = '2.9.0'
     ext.moshiVersion = '1.13.0'
     ext.nav_version = "2.4.2"
+    ext.paging_version = "3.1.1"
 
     repositories {
         google() // Google's Maven repository
