@@ -1,4 +1,4 @@
-package com.celiluysal.itunesexplorer.data.remote.api
+package com.celiluysal.itunesexplorer.data.remote.service
 
 import com.celiluysal.itunesexplorer.data.model.responses.SearchResult
 import retrofit2.Response
