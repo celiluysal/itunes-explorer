@@ -49,7 +49,7 @@ class HomeActivity : BaseActivity() {
     }
 
     override fun loadUI() {
-        viewModel.search()
+
     }
 
 }

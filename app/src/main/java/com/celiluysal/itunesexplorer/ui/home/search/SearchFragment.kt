@@ -1,23 +1,30 @@
 package com.celiluysal.itunesexplorer.ui.home.search
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.celiluysal.itunesexplorer.databinding.FragmentSearchBinding
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
-import com.celiluysal.itunesexplorer.ui.home.HomeActivity
+import com.celiluysal.itunesexplorer.ui.base.listeners.RecyclerViewListener
+import com.celiluysal.itunesexplorer.ui.home.search.adapter.MediaItemsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchFragment: BaseFragment() {
+class SearchFragment: BaseFragment(), RecyclerViewListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: SearchViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.search()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +36,20 @@ class SearchFragment: BaseFragment() {
     }
 
     override fun loadUI() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment())
-        }, 1500)
+        viewModel.mediaItemsLiveData.observe(viewLifecycleOwner) {
+            binding.mediaItemsRecyclerview.adapter = MediaItemsAdapter(it, this)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClicked(position: Int) {
+        viewModel.getDetailAction(position)?.let {
+            findNavController().navigate(it)
+        }
     }
 
 }

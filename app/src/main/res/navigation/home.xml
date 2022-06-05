@@ -12,12 +12,22 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment">
+            <argument
+                android:name="mediaItem"
+                app:nullable="false"
+                app:argType="com.celiluysal.itunesexplorer.data.model.responses.MediaItem"/>
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.celiluysal.itunesexplorer.ui.home.detail.DetailFragment"
-        android:label="DetailFragment" />
+        android:label="DetailFragment">
+        <argument
+            android:name="mediaItem"
+            app:nullable="false"
+            app:argType="com.celiluysal.itunesexplorer.data.model.responses.MediaItem"/>
+    </fragment>
 
 </navigation>
