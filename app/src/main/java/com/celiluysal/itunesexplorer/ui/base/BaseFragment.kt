@@ -13,4 +13,14 @@ abstract class BaseFragment: Fragment() {
 
     abstract fun loadUI()
 
+    fun showLoading() {
+        (activity as BaseActivity?)?.showLoading()
+    }
+
+    fun dismissLoading() {
+        (activity as BaseActivity?)?.dismissLoading()
+    }
+
+    fun isLoadingShowing(): Boolean = (activity as BaseActivity?)?.isLoadingShowing() == true
+
 }
