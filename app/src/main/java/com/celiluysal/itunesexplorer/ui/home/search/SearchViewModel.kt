@@ -9,16 +9,15 @@ import com.celiluysal.itunesexplorer.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val repository: Repository): ViewModel() {
     val mediaItemsLiveData = MutableLiveData<List<MediaItem?>>()
 
-    fun search() {
+    fun search(query: String) {
         viewModelScope.launch {
-            repository.search("r", 20, 0, "movie").collect { resource ->
+            repository.search(query, 20, 0, "podcast").collect { resource ->
                 resource.data?.results?.let {
                     mediaItemsLiveData.value = it
                 }

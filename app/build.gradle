@@ -17,6 +17,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -105,5 +107,9 @@ dependencies {
 
     //Paging
     implementation("androidx.paging:paging-runtime:$paging_version")
+
+    implementation "androidx.multidex:multidex:2.0.1"
+
+    implementation 'com.github.adroitandroid:ChipCloud:2.2.1'
 
 }

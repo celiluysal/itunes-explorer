@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="itunes_entities">
+        <item>Movies</item>
+        <item>Music</item>
+        <item>Ebook</item>
+        <item>Podcast</item>
+    </array>
+</resources>

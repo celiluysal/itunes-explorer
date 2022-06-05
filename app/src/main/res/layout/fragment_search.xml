@@ -1,19 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.search.SearchFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple_700"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/search_edit_text"
+                    style="@style/ITunesExplorer.Search"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="@color/white"
+                    android:imeOptions="actionSearch"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingHorizontal="10dp"
+                    android:textColorHint="@color/purple_700" />
+
+                <com.adroitandroid.chipcloud.ChipCloud xmlns:chipcloud="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/chip_cloud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    chipcloud:allCaps="false"
+                    chipcloud:circularflow_radiusInDP="2dp"
+                    chipcloud:deselectTransitionMS="100"
+                    chipcloud:deselectedColor="@color/chip_unselected"
+                    chipcloud:deselectedFontColor="@color/black"
+                    chipcloud:gravity="center"
+                    chipcloud:itemSpacing="20dp"
+                    chipcloud:labels="@array/itunes_entities"
+                    chipcloud:layout_constraintTop_toBottomOf="@id/top_layout"
+                    chipcloud:selectMode="required"
+                    chipcloud:selectTransitionMS="100"
+                    chipcloud:selectedColor="@color/teal_200"
+                    chipcloud:selectedFontColor="@color/white"
+                    chipcloud:textSize="16sp"
+                    chipcloud:verticalSpacing="16dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/media_items_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
         android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_layout"
         app:reverseLayout="false"
-        tools:listitem="@layout/item_media_item"/>
+        app:spanCount="2"
+        tools:listitem="@layout/item_media_item" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
