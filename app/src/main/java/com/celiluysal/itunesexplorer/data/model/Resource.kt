@@ -1,4 +1,4 @@
-package com.celiluysal.itunesexplorer.data
+package com.celiluysal.itunesexplorer.data.model
 
 sealed class Resource<T>(
     val data: T? = null,

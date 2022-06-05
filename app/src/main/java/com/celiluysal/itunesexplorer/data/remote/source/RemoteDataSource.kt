@@ -1,6 +1,6 @@
-package com.celiluysal.itunesexplorer.data.remote
+package com.celiluysal.itunesexplorer.data.remote.source
 
-import com.celiluysal.itunesexplorer.data.Resource
+import com.celiluysal.itunesexplorer.data.model.Resource
 import com.celiluysal.itunesexplorer.data.model.responses.SearchResult
 
 interface RemoteDataSource {

@@ -1,6 +1,6 @@
-package com.celiluysal.itunesexplorer.data.remote
+package com.celiluysal.itunesexplorer.data.remote.source
 
-import com.celiluysal.itunesexplorer.data.Resource
+import com.celiluysal.itunesexplorer.data.model.Resource
 import com.celiluysal.itunesexplorer.data.model.NO_INTERNET_CONNECTION
 import com.celiluysal.itunesexplorer.data.model.UNAUTHORIZED
 import com.celiluysal.itunesexplorer.data.model.responses.SearchResult
@@ -10,9 +10,8 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
-class RemoteData @Inject
-constructor(
-    private val networkManager: NetworkManager,
+class RemoteDataSourceFactory @Inject constructor(
+    private val itunesService: ItunesService,
     private val networkUtil: NetworkUtil
 ) : RemoteDataSource {
     override suspend fun search(
@@ -21,7 +20,7 @@ constructor(
         offset: Int?,
         entity: String?
     ): Resource<SearchResult> {
-        networkManager.createService(ItunesService::class.java).search(term, limit, offset, entity)
+        itunesService.search(term, limit, offset, entity)
             .let {
                 return handleResponse(it) as Resource<SearchResult>
             }
