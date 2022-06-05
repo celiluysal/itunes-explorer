@@ -4,18 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.celiluysal.itunesexplorer.data.model.responses.MediaItem
 import com.celiluysal.itunesexplorer.databinding.ItemMediaItemBinding
 import com.celiluysal.itunesexplorer.ui.base.listeners.RecyclerViewListener
 import com.celiluysal.itunesexplorer.ui.home.search.SearchViewModel
 
 class MediaItemsAdapter(
-    private val searchViewModel: SearchViewModel,
+    private val list: List<MediaItem?>,
     private val listener: RecyclerViewListener
-) : PagingDataAdapter<MediaItem, MediaItemsViewHolder>(diffCallback) {
+) : RecyclerView.Adapter<MediaItemsViewHolder>() {
 
     override fun onBindViewHolder(holder: MediaItemsViewHolder, position: Int) {
-        holder.bind(getItem(position), listener)
+        holder.bind(list[position], listener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaItemsViewHolder {
@@ -28,16 +29,6 @@ class MediaItemsAdapter(
         )
     }
 
-    companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<MediaItem>() {
-            override fun areItemsTheSame(oldItem: MediaItem, newItem: MediaItem): Boolean {
-                return oldItem == newItem
-            }
+    override fun getItemCount(): Int = list.size
 
-            override fun areContentsTheSame(oldItem: MediaItem, newItem: MediaItem): Boolean {
-                return oldItem == newItem
-            }
-
-        }
-    }
 }
