@@ -11,8 +11,9 @@ class MediaItemsViewHolder(private val binding: ItemMediaItemBinding) :
 
     fun bind(mediaItem: MediaItem?, listener: RecyclerViewListener) {
         binding.mediaItemImageview.loadImage(mediaItem?.artworkUrl100)
-        binding.mediaItemNameTextview.text = mediaItem?.trackName
-        binding.mediaItemPriceTextview.text = mediaItem?.trackPrice.toString()
+        binding.mediaItemNameTextview.text = mediaItem?.collectionName
+        binding.mediaItemDateTextview.text = mediaItem?.releaseDate
+        binding.mediaItemPriceTextview.text = mediaItem?.collectionPrice.toString()
         binding.root.setOnClickListener {
             listener.onItemClicked(absoluteAdapterPosition)
         }

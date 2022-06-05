@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.celiluysal.itunesexplorer.databinding.FragmentDetailBinding
+import com.celiluysal.itunesexplorer.extensions.loadImage
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +35,14 @@ class DetailFragment: BaseFragment() {
     }
 
     override fun loadUI() {
-        binding.mediaItemNameTextview.text = viewModel.mediaItem.trackName
+        with(binding) {
+            mediaItemImageview.loadImage(viewModel.mediaItem.artworkUrl100)
+            mediaItemNameTextview.text = viewModel.mediaItem.collectionName
+            mediaItemDateTextview.text = viewModel.mediaItem.releaseDate
+            mediaItemPriceTextview.text = viewModel.mediaItem.collectionPrice.toString()
+            mediaItemDetailTextview.text = viewModel.mediaItem.longDescription
+        }
+
     }
 
     override fun onDestroyView() {
