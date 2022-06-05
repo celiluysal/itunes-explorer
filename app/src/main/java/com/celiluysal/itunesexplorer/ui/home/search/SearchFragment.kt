@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.adroitandroid.chipcloud.ChipListener
 import com.celiluysal.itunesexplorer.data.model.enums.EntityEnum
 import com.celiluysal.itunesexplorer.databinding.FragmentSearchBinding
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
@@ -28,7 +29,7 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.search("a")
+        viewModel.search()
     }
 
     override fun onCreateView(
@@ -42,11 +43,23 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun loadUI() {
-        binding.chipCloud.setSelectedChip(EntityEnum.MOVIE.index)
+        if (!binding.chipCloud.isSelected)
+            binding.chipCloud.setSelectedChip(viewModel.entity.index)
+
+        binding.chipCloud.setChipListener(object : ChipListener {
+            override fun chipSelected(index: Int) {
+                viewModel.entity = EntityEnum.values()[index]
+                viewModel.search()
+            }
+
+            override fun chipDeselected(index: Int) {}
+
+        })
 
         binding.searchEditText.doAfterTextChanged {
             if (it.toString().length > 2) {
-                viewModel.search(it.toString())
+                viewModel.searchQuery = it.toString()
+                viewModel.search()
             }
         }
 

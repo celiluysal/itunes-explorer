@@ -9,5 +9,5 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="transparent">#00ffffff</color>
-    <color name="chip_unselected">#FFFFFFF0</color>
+    <color name="chip_unselected">#FFFFFFFE</color>
 </resources>
