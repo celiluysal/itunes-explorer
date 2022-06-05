@@ -11,5 +11,5 @@ data class SearchResult(
     @Json(name = "resultCount")
     val resultCount: Int? = null,
     @Json(name = "results")
-    val results: List<MediaItem>? = null
+    var results: List<MediaItem>? = null
 ): Parcelable

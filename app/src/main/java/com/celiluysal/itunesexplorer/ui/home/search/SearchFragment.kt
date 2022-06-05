@@ -1,18 +1,21 @@
 package com.celiluysal.itunesexplorer.ui.home.search
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.adroitandroid.chipcloud.ChipListener
+import com.celiluysal.itunesexplorer.data.model.Resource
 import com.celiluysal.itunesexplorer.data.model.enums.EntityEnum
+import com.celiluysal.itunesexplorer.data.model.responses.MediaItem
+import com.celiluysal.itunesexplorer.data.model.responses.SearchResult
 import com.celiluysal.itunesexplorer.databinding.FragmentSearchBinding
+import com.celiluysal.itunesexplorer.extensions.gone
+import com.celiluysal.itunesexplorer.extensions.visible
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
 import com.celiluysal.itunesexplorer.ui.base.listeners.RecyclerViewListener
 import com.celiluysal.itunesexplorer.ui.home.search.adapter.MediaItemsAdapter
@@ -26,6 +29,8 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
     private val binding get() = _binding!!
 
     private val viewModel: SearchViewModel by viewModels()
+
+    private lateinit var mediaItemsAdapter: MediaItemsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +46,9 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
         return binding.root
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun loadUI() {
+        binding.mediaItemsRecyclerview.adapter = MediaItemsAdapter(listOf(), this)
+
         if (!binding.chipCloud.isSelected)
             binding.chipCloud.setSelectedChip(viewModel.entity.index)
 
@@ -63,9 +69,64 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
             }
         }
 
-        viewModel.mediaItemsLiveData.observe(viewLifecycleOwner) {
-            binding.mediaItemsRecyclerview.adapter = MediaItemsAdapter(it, this)
+        binding.mediaItemsRecyclerview.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (!isLoadingShowing())
+                        getList()
+                }
+            }
+        })
+
+        viewModel.stateLiveData.observe(viewLifecycleOwner) {
+            handleData(it)
         }
+
+
+    }
+
+    private fun getList(firstTime: Boolean = false) {
+        viewModel.search()
+    }
+
+    private fun handleData(status: Resource<SearchResult>) {
+        when (status) {
+            is Resource.Loading -> showLoading()
+            is Resource.Success -> status.data?.results?.let {
+                dismissLoading()
+                if (it.isNotEmpty())
+                    bindListData(it)
+                else
+                    showEmptyListLayout()
+            }
+            is Resource.DataError -> {
+                dismissLoading()
+                //todo show error
+            }
+        }
+    }
+
+    private fun bindListData(list: List<MediaItem?>) {
+        binding.emptyListLayout.gone()
+        binding.mediaItemsRecyclerview.visible()
+
+        if (viewModel.isAdapterInitialized)
+            mediaItemsAdapter.notifyItemRangeInserted(
+                viewModel.getInsertPosition(),
+                viewModel.newItemsCount
+            )
+        else
+            mediaItemsAdapter = MediaItemsAdapter(list, this).also {
+                binding.mediaItemsRecyclerview.adapter = it
+                viewModel.isAdapterInitialized = true
+            }
+    }
+
+    private fun showEmptyListLayout() {
+        binding.mediaItemsRecyclerview.gone()
+        binding.emptyListLayout.visible()
     }
 
     override fun onDestroyView() {
