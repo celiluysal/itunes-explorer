@@ -19,10 +19,10 @@ class MediaItemsViewHolder(
     fun bind(mediaItem: MediaItem?, listener: RecyclerViewListener) {
         with(binding) {
             mediaItem?.run {
-                mediaItemImageview.loadImage(artworkUrl100)
-                mediaItemNameTextview.text = existingName
-                mediaItemDateTextview.text = formattedDate
-                mediaItemPriceTextview.setPriceText(context, existingPrice, currency)
+                imageview.loadImage(artworkUrl100)
+                nameTextview.text = existingName
+                dateTextview.text = formattedDate
+                priceTextview.setPriceText(context, existingPrice, currency)
 
                 root.setOnClickListener {
                     listener.onItemClicked(absoluteAdapterPosition)

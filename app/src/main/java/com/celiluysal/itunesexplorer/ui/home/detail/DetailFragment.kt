@@ -5,8 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.celiluysal.itunesexplorer.R
 import com.celiluysal.itunesexplorer.databinding.FragmentDetailBinding
 import com.celiluysal.itunesexplorer.extensions.loadImage
+import com.celiluysal.itunesexplorer.extensions.setPriceText
+import com.celiluysal.itunesexplorer.extensions.toFormatHtml
+import com.celiluysal.itunesexplorer.extensions.visible
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,11 +41,24 @@ class DetailFragment: BaseFragment() {
 
     override fun loadUI() {
         with(binding) {
-            mediaItemImageview.loadImage(viewModel.mediaItem.artworkUrl100)
-            mediaItemNameTextview.text = viewModel.mediaItem.collectionName
-            mediaItemDateTextview.text = viewModel.mediaItem.releaseDate
-            mediaItemPriceTextview.text = viewModel.mediaItem.collectionPrice.toString()
-            mediaItemDetailTextview.text = viewModel.mediaItem.longDescription
+            viewModel.mediaItem.run {
+                imageview.loadImage(artworkUrl100)
+                nameTextview.text = existingName
+                dateTextview.text = getString(R.string.release_date).plus(formattedDate)
+                priceTextview.setPriceText(requireContext(), existingPrice, currency)
+                shortDescription?.let {
+                    shortDescriptionTextview.visible()
+                    shortDescriptionTextview.text = it
+                }
+                existingLongDescription?.let {
+                    longDescriptionTextview.visible()
+                    longDescriptionTextview.text = it.toFormatHtml
+                }
+            }
+
+            backTextview.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
 
     }

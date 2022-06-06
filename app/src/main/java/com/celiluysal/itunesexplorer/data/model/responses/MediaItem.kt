@@ -84,6 +84,8 @@ data class MediaItem(
     val collectionArtistId: Int? = null,
     @Json(name = "collectionArtistViewUrl")
     val collectionArtistViewUrl: String? = null,
+    @Json(name = "description")
+    val description: String? = null,
     @Json(name = "shortDescription")
     val shortDescription: String? = null,
     @Json(name = "longDescription")
@@ -92,4 +94,5 @@ data class MediaItem(
     val existingName: String? get() = collectionName ?: collectionCensoredName ?: trackName ?: trackCensoredName
     val existingPrice: Double? get() = collectionPrice ?: trackPrice ?: price
     val formattedDate: String? get() = releaseDate?.toDate(DATE_TIME_FORMAT)?.toString(DATE_DOT_TEXT_FORMAT)
+    val existingLongDescription: String? get() = longDescription ?: description
 }

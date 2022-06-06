@@ -35,7 +35,7 @@
                     android:importantForAutofill="no"
                     android:inputType="text"
                     android:paddingHorizontal="10dp"
-                    android:textColorHint="?attr/colorPrimary" />
+                    android:textColorHint="?attr/colorPrimaryVariant" />
 
                 <com.adroitandroid.chipcloud.ChipCloud xmlns:chipcloud="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/chip_cloud"
@@ -54,7 +54,7 @@
                     chipcloud:layout_constraintTop_toBottomOf="@id/top_layout"
                     chipcloud:selectMode="required"
                     chipcloud:selectTransitionMS="0"
-                    chipcloud:selectedColor="@color/teal_200"
+                    chipcloud:selectedColor="?attr/colorSecondary"
                     chipcloud:selectedFontColor="@color/white"
                     chipcloud:textSize="16sp"
                     chipcloud:verticalSpacing="16dp" />
