@@ -120,10 +120,10 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
     }
 
     private fun setupRecyclerView(list: List<MediaItem?>, listener: RecyclerViewListener) {
+        viewModel.isAdapterInitialized = true
         mediaItemsAdapter = MediaItemsAdapter(list, listener)
         binding.mediaItemsRecyclerview.run {
             adapter = mediaItemsAdapter
-            visible()
             setHasFixedSize(true)
             viewTreeObserver.addOnPreDrawListener {
                 startPostponedEnterTransition()
