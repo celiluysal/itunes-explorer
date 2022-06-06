@@ -1,6 +1,10 @@
 package com.celiluysal.itunesexplorer.data.model.responses
 
 import android.os.Parcelable
+import com.celiluysal.itunesexplorer.extensions.DATE_DOT_TEXT_FORMAT
+import com.celiluysal.itunesexplorer.extensions.DATE_TIME_FORMAT
+import com.celiluysal.itunesexplorer.extensions.toDate
+import com.celiluysal.itunesexplorer.extensions.toString
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -46,6 +50,8 @@ data class MediaItem(
     val collectionPrice: Double? = null,
     @Json(name = "trackPrice")
     val trackPrice: Double? = null,
+    @Json(name = "price")
+    val price: Double? = null,
     @Json(name = "releaseDate")
     val releaseDate: String? = null,
     @Json(name = "collectionExplicitness")
@@ -82,4 +88,8 @@ data class MediaItem(
     val shortDescription: String? = null,
     @Json(name = "longDescription")
     val longDescription: String? = null,
-): Parcelable
+): Parcelable {
+    val existingName: String? get() = collectionName ?: collectionCensoredName ?: trackName ?: trackCensoredName
+    val existingPrice: Double? get() = collectionPrice ?: trackPrice ?: price
+    val formattedDate: String? get() = releaseDate?.toDate(DATE_TIME_FORMAT)?.toString(DATE_DOT_TEXT_FORMAT)
+}

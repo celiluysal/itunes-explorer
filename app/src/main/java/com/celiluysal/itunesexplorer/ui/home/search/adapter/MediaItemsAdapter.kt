@@ -18,6 +18,7 @@ class MediaItemsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaItemsViewHolder {
         return MediaItemsViewHolder(
+            parent.context,
             ItemMediaItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
