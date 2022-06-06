@@ -52,7 +52,7 @@ class DetailFragment: BaseFragment() {
                 }
                 existingLongDescription?.let {
                     longDescriptionTextview.visible()
-                    longDescriptionTextview.text = it.toFormatHtml
+                    longDescriptionTextview.text = it.toFormatHtml()
                 }
             }
 
