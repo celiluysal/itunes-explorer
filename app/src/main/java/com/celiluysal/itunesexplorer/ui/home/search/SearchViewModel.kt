@@ -2,6 +2,7 @@ package com.celiluysal.itunesexplorer.ui.home.search
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
@@ -23,43 +24,53 @@ class SearchViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     private val context = getApplication<Application>()
 
-    val stateLiveData = MutableLiveData<Resource<SearchResult>>()
-    var mediaItemList: ArrayList<MediaItem> = arrayListOf()
+    private val stateLiveDataPrivate = MutableLiveData<Resource<SearchResult>>()
+    val stateLiveData: LiveData<Resource<SearchResult>> get() = stateLiveDataPrivate
+
+    private var mediaItemList: ArrayList<MediaItem> = arrayListOf()
 
     var entity: EntityEnum = EntityEnum.MOVIE
     var searchQuery: String = ""
+    private var offset = 0
 
     var isAdapterInitialized: Boolean = false
+    val insertPosition: Int get() = mediaItemList.size - newItemsCount
     var newItemsCount = 0
-    private var offset = 0
+        private set
 
     fun search() {
         viewModelScope.launch {
-            stateLiveData.value = Resource.Loading()
+            stateLiveDataPrivate.value = Resource.Loading()
             repository.search(
-                searchQuery ,
+                searchQuery,
                 context.resources.getInteger(R.integer.search_result_limit),
-                0,
+                offset,
                 entity.key
             ).collect { resource ->
                 if (resource is Resource.DataError)
-                    stateLiveData.value = resource
+                    stateLiveDataPrivate.value = resource
 
                 resource.data?.results?.let {
                     mediaItemList.addAll(it)
                     newItemsCount = it.size
-                    offset += newItemsCount
+                    offset += newItemsCount + 1
 
-                    stateLiveData.value = Resource.Success(SearchResult(resource.data.resultCount, mediaItemList))
+                    stateLiveDataPrivate.value =
+                        Resource.Success(SearchResult(resource.data.resultCount, mediaItemList))
                 }
             }
         }
     }
 
-    fun getInsertPosition() = mediaItemList.size - newItemsCount
+    fun resetData() {
+        isAdapterInitialized = false
+        newItemsCount = 0
+        offset = 0
+        mediaItemList.clear()
+    }
 
-    fun getDetailAction(position: Int): NavDirections? {
-        return stateLiveData.value?.data?.results?.get(position)?.let {
+    fun getDetailAction(position: Int): NavDirections {
+        return mediaItemList[position].let {
             SearchFragmentDirections.actionSearchFragmentToDetailFragment(it)
         }
     }

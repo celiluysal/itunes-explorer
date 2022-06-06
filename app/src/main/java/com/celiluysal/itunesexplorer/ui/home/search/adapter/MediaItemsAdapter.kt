@@ -2,13 +2,10 @@ package com.celiluysal.itunesexplorer.ui.home.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.celiluysal.itunesexplorer.data.model.responses.MediaItem
 import com.celiluysal.itunesexplorer.databinding.ItemMediaItemBinding
 import com.celiluysal.itunesexplorer.ui.base.listeners.RecyclerViewListener
-import com.celiluysal.itunesexplorer.ui.home.search.SearchViewModel
 
 class MediaItemsAdapter(
     private val list: List<MediaItem?>,

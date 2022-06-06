@@ -32,30 +32,32 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
 
     private lateinit var mediaItemsAdapter: MediaItemsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.search()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
+
+        if (viewModel.stateLiveData.value?.data?.results?.isNotEmpty() == true)
+            setupRecyclerView(viewModel.stateLiveData.value?.data?.results!!, this)
+
+        observeViewModel()
+
         return binding.root
     }
 
     override fun loadUI() {
-        binding.mediaItemsRecyclerview.adapter = MediaItemsAdapter(listOf(), this)
-
         if (!binding.chipCloud.isSelected)
             binding.chipCloud.setSelectedChip(viewModel.entity.index)
 
         binding.chipCloud.setChipListener(object : ChipListener {
             override fun chipSelected(index: Int) {
-                viewModel.entity = EntityEnum.values()[index]
-                viewModel.search()
+                if (viewModel.entity.index != index) {
+                    viewModel.entity = EntityEnum.values()[index]
+                    viewModel.resetData()
+                    viewModel.search()
+                }
             }
 
             override fun chipDeselected(index: Int) {}
@@ -63,8 +65,9 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
         })
 
         binding.searchEditText.doAfterTextChanged {
-            if (it.toString().length > 2) {
+            if (it.toString().length > 2 && viewModel.searchQuery != it.toString()) {
                 viewModel.searchQuery = it.toString()
+                viewModel.resetData()
                 viewModel.search()
             }
         }
@@ -75,29 +78,26 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
                     if (!isLoadingShowing())
-                        getList()
+                        viewModel.search()
                 }
             }
         })
 
+    }
+
+    private fun observeViewModel() {
         viewModel.stateLiveData.observe(viewLifecycleOwner) {
             handleData(it)
         }
-
-
-    }
-
-    private fun getList(firstTime: Boolean = false) {
-        viewModel.search()
     }
 
     private fun handleData(status: Resource<SearchResult>) {
         when (status) {
             is Resource.Loading -> showLoading()
-            is Resource.Success -> status.data?.results?.let {
+            is Resource.Success -> status.data?.results?.let { list ->
                 dismissLoading()
-                if (it.isNotEmpty())
-                    bindListData(it)
+                if (list.isNotEmpty())
+                    bindListData(list)
                 else
                     showEmptyListLayout()
             }
@@ -109,19 +109,32 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
     }
 
     private fun bindListData(list: List<MediaItem?>) {
-        binding.emptyListLayout.gone()
-        binding.mediaItemsRecyclerview.visible()
-
+        hideEmptyListLayout()
         if (viewModel.isAdapterInitialized)
             mediaItemsAdapter.notifyItemRangeInserted(
-                viewModel.getInsertPosition(),
+                viewModel.insertPosition,
                 viewModel.newItemsCount
             )
         else
-            mediaItemsAdapter = MediaItemsAdapter(list, this).also {
-                binding.mediaItemsRecyclerview.adapter = it
-                viewModel.isAdapterInitialized = true
+            setupRecyclerView(list, this)
+    }
+
+    private fun setupRecyclerView(list: List<MediaItem?>, listener: RecyclerViewListener) {
+        mediaItemsAdapter = MediaItemsAdapter(list, listener)
+        binding.mediaItemsRecyclerview.run {
+            adapter = mediaItemsAdapter
+            visible()
+            setHasFixedSize(true)
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
             }
+        }
+    }
+
+    private fun hideEmptyListLayout() {
+        binding.emptyListLayout.gone()
+        binding.mediaItemsRecyclerview.visible()
     }
 
     private fun showEmptyListLayout() {
@@ -135,9 +148,7 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
     }
 
     override fun onItemClicked(position: Int) {
-        viewModel.getDetailAction(position)?.let {
-            findNavController().navigate(it)
-        }
+        findNavController().navigate(viewModel.getDetailAction(position))
     }
 
 }
