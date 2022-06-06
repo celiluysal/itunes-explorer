@@ -10,4 +10,5 @@
 
     <color name="transparent">#00ffffff</color>
     <color name="chip_unselected">#FFFFFFFE</color>
+    <color name="free">#4CAF50</color>
 </resources>
