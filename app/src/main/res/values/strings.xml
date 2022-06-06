@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">iTunes Explorer</string>
-
     <string name="search_hint">Search..</string>
     <string name="action_back">Back</string>
 
