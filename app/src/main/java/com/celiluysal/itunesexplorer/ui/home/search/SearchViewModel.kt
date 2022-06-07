@@ -29,16 +29,36 @@ class SearchViewModel @Inject constructor(
 
     private var mediaItemList: ArrayList<MediaItem> = arrayListOf()
 
-    var entity: EntityEnum = EntityEnum.MOVIE
-    var searchQuery: String = ""
-    private var offset = 0
-
+    private var isLastPage: Boolean = false
     var isAdapterInitialized: Boolean = false
     val insertPosition: Int get() = mediaItemList.size - newItemsCount
     var newItemsCount = 0
         private set
 
+    private var offset = 0
+
+    var entity: EntityEnum = EntityEnum.MOVIE
+        set(value) {
+            if (entity.index != value.index) {
+                field = value
+                resetData()
+                search()
+            }
+        }
+
+    var searchQuery: String = ""
+        set(value) {
+            if (value.length > 2 && searchQuery != value) {
+                field = value
+                resetData()
+                search()
+            }
+        }
+
     fun search() {
+        if (isLastPage)
+            return
+
         viewModelScope.launch {
             stateLiveDataPrivate.value = Resource.Loading()
             repository.search(
@@ -51,8 +71,11 @@ class SearchViewModel @Inject constructor(
                     stateLiveDataPrivate.value = resource
 
                 resource.data?.results?.let {
-                    mediaItemList.addAll(it)
                     newItemsCount = it.size
+                    if (newItemsCount < context.resources.getInteger(R.integer.search_result_limit))
+                        isLastPage = true
+
+                    mediaItemList.addAll(it)
                     offset += newItemsCount + 1
 
                     stateLiveDataPrivate.value =
@@ -62,7 +85,8 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun resetData() {
+    private fun resetData() {
+        isLastPage = false
         isAdapterInitialized = false
         newItemsCount = 0
         offset = 0

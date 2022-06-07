@@ -43,11 +43,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(),
 
         binding.chipCloud.setChipListener(object : ChipListener {
             override fun chipSelected(index: Int) {
-                if (viewModel.entity.index != index) {
-                    viewModel.entity = EntityEnum.values()[index]
-                    viewModel.resetData()
-                    viewModel.search()
-                }
+                viewModel.entity = EntityEnum.values()[index]
             }
 
             override fun chipDeselected(index: Int) {}
@@ -55,10 +51,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(),
         })
 
         binding.searchEditText.doAfterTextChanged {
-            if (it.toString().length > 2 && viewModel.searchQuery != it.toString()) {
+            it?.let {
                 viewModel.searchQuery = it.toString()
-                viewModel.resetData()
-                viewModel.search()
             }
         }
 
