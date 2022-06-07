@@ -13,17 +13,15 @@ import com.celiluysal.itunesexplorer.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>() {
 
-    private lateinit var binding: ActivityHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+    override fun getViewBinding(): ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
+    override val viewModel: HomeViewModel by viewModels()
 
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         navController =
             (supportFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment).navController
@@ -38,7 +36,7 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    override fun loadUI() {
+    override fun setupUI() {
 
     }
 

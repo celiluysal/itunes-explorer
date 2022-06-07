@@ -1,9 +1,7 @@
 package com.celiluysal.itunesexplorer.ui.home.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -22,33 +20,24 @@ import com.celiluysal.itunesexplorer.ui.base.listeners.RecyclerViewListener
 import com.celiluysal.itunesexplorer.ui.home.search.adapter.MediaItemsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class SearchFragment : BaseFragment(), RecyclerViewListener {
+class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(),
+    RecyclerViewListener {
 
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
+    override fun getViewBinding(): FragmentSearchBinding =
+        FragmentSearchBinding.inflate(layoutInflater)
 
-    private val viewModel: SearchViewModel by viewModels()
+    override val viewModel: SearchViewModel by viewModels()
 
     private lateinit var mediaItemsAdapter: MediaItemsAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (viewModel.stateLiveData.value?.data?.results?.isNotEmpty() == true)
             setupRecyclerView(viewModel.stateLiveData.value?.data?.results!!, this)
-
-        observeViewModel()
-
-        return binding.root
     }
 
-    override fun loadUI() {
+    override fun setupUI() {
         if (!binding.chipCloud.isSelected)
             binding.chipCloud.setSelectedChip(viewModel.entity.index)
 
@@ -87,7 +76,7 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
 
     }
 
-    private fun observeViewModel() {
+    override fun observeViewModel() {
         viewModel.stateLiveData.observe(viewLifecycleOwner) {
             handleData(it)
         }
@@ -142,11 +131,6 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
     private fun showEmptyListLayout() {
         binding.mediaItemsRecyclerview.gone()
         binding.emptyListLayout.visible()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onItemClicked(position: Int) {

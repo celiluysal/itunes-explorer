@@ -2,9 +2,9 @@ package com.celiluysal.itunesexplorer.ui.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.viewModels
 import com.celiluysal.itunesexplorer.databinding.ActivitySplashBinding
 import com.celiluysal.itunesexplorer.ui.base.BaseActivity
 import com.celiluysal.itunesexplorer.ui.home.HomeActivity
@@ -12,17 +12,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
-    private lateinit var binding: ActivitySplashBinding
+    override fun getViewBinding(): ActivitySplashBinding = ActivitySplashBinding.inflate(layoutInflater)
+    override val viewModel: SplashViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
-    override fun loadUI() {
+    override fun setupUI() {
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, HomeActivity::class.java))
             finish()

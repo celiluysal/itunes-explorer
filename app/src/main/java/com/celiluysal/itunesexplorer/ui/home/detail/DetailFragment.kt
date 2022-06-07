@@ -1,9 +1,6 @@
 package com.celiluysal.itunesexplorer.ui.home.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.celiluysal.itunesexplorer.R
@@ -16,12 +13,11 @@ import com.celiluysal.itunesexplorer.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailFragment: BaseFragment() {
+class DetailFragment: BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
-    private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
+    override fun getViewBinding(): FragmentDetailBinding = FragmentDetailBinding.inflate(layoutInflater)
 
-    private val viewModel: DetailViewModel by viewModels()
+    override val viewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +26,7 @@ class DetailFragment: BaseFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun loadUI() {
+    override fun setupUI() {
         with(binding) {
             viewModel.mediaItem.run {
                 imageview.loadImage(artworkUrl100)
@@ -63,9 +50,8 @@ class DetailFragment: BaseFragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun observeViewModel() {
+
     }
 
 }

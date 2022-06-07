@@ -1,25 +1,30 @@
 package com.celiluysal.itunesexplorer.ui.base
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.celiluysal.itunesexplorer.ui.custom.LoadingDialog
-import dagger.hilt.android.AndroidEntryPoint
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<VB : ViewBinding, VM : ViewModel> : AppCompatActivity() {
+
+    protected lateinit var binding: VB
+    protected abstract val viewModel: VM
+
+    abstract fun getViewBinding(): VB
 
     private var loadingDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = getViewBinding()
+        setContentView(binding.root)
         loadingDialog = LoadingDialog(this).createLoading()
-        loadUI()
+        setupUI()
     }
 
-    abstract fun loadUI()
+    abstract fun setupUI()
 
     fun showLoading() {
         loadingDialog?.show()
