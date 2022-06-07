@@ -37,7 +37,7 @@ class DetailFragment: BaseFragment<FragmentDetailBinding, DetailViewModel>() {
                 }
                 existingLongDescription?.let {
                     longDescriptionTextview.visible()
-                    longDescriptionTextview.text = it.toFormatHtml()
+                    longDescriptionTextview.text = it.toHtmlSpanned()
                 }
             }
 
