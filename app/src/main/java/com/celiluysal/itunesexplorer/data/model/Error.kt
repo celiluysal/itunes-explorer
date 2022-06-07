@@ -1,8 +1,9 @@
 package com.celiluysal.itunesexplorer.data.model
 
 class Error(val code: Int, val description: String) {
-    constructor(exception: Exception) : this(code = DEFAULT_ERROR, description = exception.message
-        ?: "")
+    constructor(exception: Exception) : this(
+        code = DEFAULT_ERROR, description = exception.message ?: ""
+    )
 }
 
 const val NO_INTERNET_CONNECTION = -1

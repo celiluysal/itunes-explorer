@@ -46,9 +46,10 @@ class DetailFragment: BaseFragment<FragmentDetailBinding, DetailViewModel>() {
                 viewModel.checkFavorite()
             }
 
-            backTextview.setOnClickListener {
+            toolbar.startButtonSetOnClickListener = {
                 findNavController().navigateUp()
             }
+
         }
 
     }

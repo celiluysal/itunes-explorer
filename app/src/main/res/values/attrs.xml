@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ItunesToolbar">
+        <attr name="visibleStartButton" format="boolean" />
+        <attr name="title" format="string" />
+    </declare-styleable>
+</resources>
