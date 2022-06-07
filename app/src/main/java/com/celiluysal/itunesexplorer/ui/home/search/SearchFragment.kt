@@ -15,6 +15,7 @@ import com.celiluysal.itunesexplorer.data.model.responses.MediaItem
 import com.celiluysal.itunesexplorer.data.model.responses.SearchResult
 import com.celiluysal.itunesexplorer.databinding.FragmentSearchBinding
 import com.celiluysal.itunesexplorer.extensions.gone
+import com.celiluysal.itunesexplorer.extensions.hideKeyboard
 import com.celiluysal.itunesexplorer.extensions.visible
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
 import com.celiluysal.itunesexplorer.ui.base.listeners.RecyclerViewListener
@@ -76,6 +77,7 @@ class SearchFragment : BaseFragment(), RecyclerViewListener {
             RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
+                hideKeyboard()
                 if (!recyclerView.canScrollVertically(1)) {
                     if (!isLoadingShowing())
                         viewModel.search()
