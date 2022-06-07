@@ -16,3 +16,9 @@ fun ImageView.loadImage(resId: Int?) {
         .load(resId)
         .into(this)
 }
+
+fun ImageView.setFavoriteIcon(favorite: Boolean) {
+    (if (favorite) R.drawable.ic_round_favorite_24 else R.drawable.ic_round_favorite_border_24).let {
+        this.loadImage(it)
+    }
+}
