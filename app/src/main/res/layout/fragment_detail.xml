@@ -16,7 +16,7 @@
             android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -24,15 +24,17 @@
                     android:id="@+id/back_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
                     android:drawablePadding="8dp"
                     android:text="@string/action_back"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:drawableStartCompat="@drawable/ic_round_arrow_back_ios_new_24" />
 
-            </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 

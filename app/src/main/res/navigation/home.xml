@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.celiluysal.itunesexplorer.ui.home.search.SearchFragment"
+        android:name="com.celiluysal.itunesexplorer.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.celiluysal.itunesexplorer.ui.home.detail.DetailFragment"
+        android:name="com.celiluysal.itunesexplorer.ui.detail.DetailFragment"
         android:label="DetailFragment">
         <argument
             android:name="mediaItem"
