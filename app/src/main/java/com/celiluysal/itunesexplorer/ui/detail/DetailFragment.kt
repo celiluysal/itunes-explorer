@@ -1,14 +1,11 @@
-package com.celiluysal.itunesexplorer.ui.home.detail
+package com.celiluysal.itunesexplorer.ui.detail
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.celiluysal.itunesexplorer.R
 import com.celiluysal.itunesexplorer.databinding.FragmentDetailBinding
-import com.celiluysal.itunesexplorer.extensions.loadImage
-import com.celiluysal.itunesexplorer.extensions.setPriceText
-import com.celiluysal.itunesexplorer.extensions.toFormatHtml
-import com.celiluysal.itunesexplorer.extensions.visible
+import com.celiluysal.itunesexplorer.extensions.*
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +20,7 @@ class DetailFragment: BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             viewModel.mediaItem = DetailFragmentArgs.fromBundle(it).mediaItem
+            viewModel.checkFavorite()
         }
     }
 
@@ -43,6 +41,11 @@ class DetailFragment: BaseFragment<FragmentDetailBinding, DetailViewModel>() {
                 }
             }
 
+            favoriteImageview.setOnClickListener {
+                viewModel.toggleFavorite()
+                viewModel.checkFavorite()
+            }
+
             backTextview.setOnClickListener {
                 findNavController().navigateUp()
             }
@@ -51,7 +54,9 @@ class DetailFragment: BaseFragment<FragmentDetailBinding, DetailViewModel>() {
     }
 
     override fun observeViewModel() {
-
+        viewModel.favoriteLiveData.observe(viewLifecycleOwner) {
+            binding.favoriteImageview.setFavoriteIcon(it)
+        }
     }
 
 }

@@ -1,6 +1,9 @@
 package com.celiluysal.itunesexplorer.data.model.responses
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.celiluysal.itunesexplorer.data.model.responses.MediaItem.Companion.TABLE_NAME
 import com.celiluysal.itunesexplorer.extensions.DATE_DOT_TEXT_FORMAT
 import com.celiluysal.itunesexplorer.extensions.DATE_TIME_FORMAT
 import com.celiluysal.itunesexplorer.extensions.toDate
@@ -11,7 +14,11 @@ import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
+@Entity(tableName = TABLE_NAME)
 data class MediaItem(
+    @PrimaryKey
+    @Json(name = "trackId")
+    val trackId: Int? = null,
     @Json(name = "wrapperType")
     val wrapperType: String? = null,
     @Json(name = "kind")
@@ -20,8 +27,6 @@ data class MediaItem(
     val artistId: Int? = null,
     @Json(name = "collectionId")
     val collectionId: Int? = null,
-    @Json(name = "trackId")
-    val trackId: Int? = null,
     @Json(name = "artistName")
     val artistName: String? = null,
     @Json(name = "collectionName")
@@ -91,6 +96,11 @@ data class MediaItem(
     @Json(name = "longDescription")
     val longDescription: String? = null,
 ): Parcelable {
+
+    companion object {
+        const val TABLE_NAME = "media_item_table"
+    }
+
     val existingName: String? get() = collectionName ?: collectionCensoredName ?: trackName ?: trackCensoredName
     val existingPrice: Double? get() = collectionPrice ?: trackPrice ?: price
     val formattedDate: String? get() = releaseDate?.toDate(DATE_TIME_FORMAT)?.toString(DATE_DOT_TEXT_FORMAT)

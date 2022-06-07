@@ -1,4 +1,4 @@
-package com.celiluysal.itunesexplorer.ui.home.search
+package com.celiluysal.itunesexplorer.ui.search
 
 import android.os.Bundle
 import android.view.View
@@ -17,7 +17,7 @@ import com.celiluysal.itunesexplorer.extensions.hideKeyboard
 import com.celiluysal.itunesexplorer.extensions.visible
 import com.celiluysal.itunesexplorer.ui.base.BaseFragment
 import com.celiluysal.itunesexplorer.ui.base.listeners.RecyclerViewListener
-import com.celiluysal.itunesexplorer.ui.home.search.adapter.MediaItemsAdapter
+import com.celiluysal.itunesexplorer.ui.adapters.MediaItemsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

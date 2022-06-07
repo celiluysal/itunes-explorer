@@ -2,8 +2,8 @@
     <string name="search_hint">Search..</string>
     <string name="action_back">Back</string>
 
-    <string name="favorites_menu_title">Favorites</string>
-    <string name="search_menu_title">Search</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="search_title">Search</string>
 
     <string name="no_result_title">No Result Found!</string>
     <string name="no_result_description">Try to search another word</string>
