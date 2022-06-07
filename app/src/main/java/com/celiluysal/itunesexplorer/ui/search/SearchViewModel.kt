@@ -1,4 +1,4 @@
-package com.celiluysal.itunesexplorer.ui.home.search
+package com.celiluysal.itunesexplorer.ui.search
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

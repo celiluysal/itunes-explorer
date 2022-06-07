@@ -1,4 +1,4 @@
-package com.celiluysal.itunesexplorer.ui.home.detail
+package com.celiluysal.itunesexplorer.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

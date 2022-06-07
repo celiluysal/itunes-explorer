@@ -1,4 +1,4 @@
-package com.celiluysal.itunesexplorer.ui.home.search.adapter
+package com.celiluysal.itunesexplorer.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

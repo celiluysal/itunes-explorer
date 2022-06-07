@@ -1,4 +1,4 @@
-package com.celiluysal.itunesexplorer.ui.home.favorites
+package com.celiluysal.itunesexplorer.ui.favorites
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
