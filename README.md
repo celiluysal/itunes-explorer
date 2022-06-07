@@ -1,3 +1,6 @@
 # itunes-explorer
 
-<img src="screenshots/s1.gif" alt="1" width="200"/><img src="screenshots/s2.gif" alt="2" width="200"/><img src="screenshots/s3.gif" alt="3" width="200"/><img src="screenshots/s4.gif" alt="4" width="200"/>
+[![s1c2b5045c19f8017f.gif](https://s8.gifyu.com/images/s1c2b5045c19f8017f.gif)](https://gifyu.com/image/SHL9w)
+[![s21536c5c0aeaa4780.gif](https://s8.gifyu.com/images/s21536c5c0aeaa4780.gif)](https://gifyu.com/image/SHL9h)
+[![s34794ff386a375eb3.gif](https://s8.gifyu.com/images/s34794ff386a375eb3.gif)](https://gifyu.com/image/SHL9E)
+[![s42c397454dd2d55b1.gif](https://s8.gifyu.com/images/s42c397454dd2d55b1.gif)](https://gifyu.com/image/SHL9k)
